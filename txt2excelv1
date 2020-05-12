@@ -1,0 +1,16 @@
+# coding=utf-8
+import xlwt
+import _locale
+_locale._getdefaultlocale = (lambda *args: ['en_US', 'utf8'])
+import sys
+source=sys.argv[1]
+target=sys.argv[2]
+
+wb = xlwt.Workbook(encoding = 'utf-8')
+ws = wb.add_sheet('sheet1')
+lines=open(source,'r').readlines()
+for line in range(0,len(lines)):
+ row=lines[line].strip('\n').split(',')
+ for r in range(0,len(row)):
+  ws.write(line,r,row[r])
+  wb.save(target)
