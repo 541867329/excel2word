@@ -10,6 +10,11 @@ from xlrd import xldate_as_tuple
 from docxtpl import DocxTemplate
 #将excel导出到word的脚本
 
+import _locale
+#python解释器会取_getdefaultlocale()[1]作为默认编码类型，重写后，会改变当前运行环境下的所有模块的默认编码。
+#跨模块、全局改变python解释器的默认编码为utf-8,会带来很多使用上的便利，而不需要被gbk编码报错的噩梦所纠缠。
+_locale._getdefaultlocale = (lambda *args: ['en_US', 'utf8'])
+
 wb=load_workbook('./test.xlsx')#读取文件
 ws=wb['MySheet'] #工作表
 data=[ i for i in ws.values ]#获取工作表内的所有数据
