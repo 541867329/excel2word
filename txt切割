@@ -1,0 +1,32 @@
+# coding=utf-8
+from datetime import datetime
+import _locale
+_locale._getdefaultlocale = (lambda *args: ['en_US', 'utf8'])
+import sys
+
+def Main(s,t):
+    source_dir = s
+    target_dir = t
+    flag = 0
+    name = 1
+    dataList = []
+    print(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    with open(source_dir, 'r') as f_source:
+        for line in f_source:
+            flag += 1
+            dataList.append(line)
+            if flag == 100000:
+                with open(target_dir + "pass_" + str(name) + ".txt", 'w+') as f_target:
+                    for data in dataList:
+                        f_target.write(data)
+                name += 1
+                flag = 0
+                dataList = []
+    with open(target_dir + "pass_" + str(name) + ".txt", 'w+') as f_target:
+        for data in dataList:
+            f_target.write(data)
+    print(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
+
+if __name__ == "__main__":
+    Main(sys.argv[1],sys.argv[2])
